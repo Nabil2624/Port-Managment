@@ -1,0 +1,41 @@
+.terminal {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  min-width: 250px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.terminal.dangerous {
+  border-color: #ff4444;
+  background-color: #fff5f5;
+}
+
+.terminal.bulky {
+  border-color: #4444ff;
+  background-color: #f5f5ff;
+}
+
+.terminal.occupied {
+  border-color: #ffaa00;
+  background-color: #fffaf0;
+}
+
+.terminal.available {
+  border-color: #00aa00;
+  background-color: #f0fff0;
+}
+
+.terminal-info {
+  margin-top: 10px;
+}
+
+.current-ship {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
