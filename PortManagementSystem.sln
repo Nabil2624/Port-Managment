@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortManagementSystem.API", "PortManagementSystemAPI\PortManagementSystem.API.csproj", "{AE83E5B0-A7CE-4490-AF39-FD9E6DA67947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortManagementSystem.BLL", "PortManagementSystem.BLL\PortManagementSystem.BLL.csproj", "{B6DE5B77-8EBB-40EA-8A4A-2FB5DBF45455}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortManagementSystem.DAL", "PortManagementSystem.DAL\PortManagementSystem.DAL.csproj", "{DFAA0161-0D78-4ED2-AB6E-E4595E7E1E64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE83E5B0-A7CE-4490-AF39-FD9E6DA67947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE83E5B0-A7CE-4490-AF39-FD9E6DA67947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE83E5B0-A7CE-4490-AF39-FD9E6DA67947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE83E5B0-A7CE-4490-AF39-FD9E6DA67947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6DE5B77-8EBB-40EA-8A4A-2FB5DBF45455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6DE5B77-8EBB-40EA-8A4A-2FB5DBF45455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6DE5B77-8EBB-40EA-8A4A-2FB5DBF45455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6DE5B77-8EBB-40EA-8A4A-2FB5DBF45455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFAA0161-0D78-4ED2-AB6E-E4595E7E1E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFAA0161-0D78-4ED2-AB6E-E4595E7E1E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFAA0161-0D78-4ED2-AB6E-E4595E7E1E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFAA0161-0D78-4ED2-AB6E-E4595E7E1E64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A364C854-3990-4209-A9FC-AEB7917DA233}
+	EndGlobalSection
+EndGlobal

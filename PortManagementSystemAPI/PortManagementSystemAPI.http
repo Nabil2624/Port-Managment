@@ -1,0 +1,6 @@
+@PortManagementSystemAPI_HostAddress = http://localhost:5173
+
+GET {{PortManagementSystemAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
