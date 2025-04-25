@@ -9,10 +9,16 @@ namespace PortManagementSystem.DAL.Repository
 {
     public interface IShipRepository
     {
-        public void AddShip(Ship ship);
+
+        public bool SaveChanges();
+        public void AddShip<T>(T shipToAdd);
+        public Ship GetShip(int id);
+        public void RemoveShip<T>(T ship);
+
+        /*public void AddShip(Ship ship);
         public void UpdateShip(Ship ship);
         public void DeleteShip(Ship ship);
         public IQueryable<Ship> GetAll();
-        public Ship GetById(int id);
+        public Ship GetById(int id);*/
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PortManagementSystem.BLL.Managers;
 using PortManagementSystem.DAL.Database;
 using PortManagementSystem.DAL.Repository;
 
@@ -18,7 +19,10 @@ internal class Program
         builder.Services.AddScoped<ITerminalRepository , TerminalRepository>();
         builder.Services.AddScoped<IShipmentRepository , ShipmentRepository>();
         builder.Services.AddScoped<IShipRepository , ShipRepository>();
-        
+        builder.Services.AddScoped<IShipRepository, ShipRepository>();
+        builder.Services.AddScoped<IShipServices, ShipServices>();
+
+
         builder.Services.AddDbContext<ProgramContext>(option =>
 
             option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

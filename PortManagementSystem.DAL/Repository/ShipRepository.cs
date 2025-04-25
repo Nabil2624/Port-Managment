@@ -12,38 +12,66 @@ namespace PortManagementSystem.DAL.Repository
     {
         private ProgramContext _context;
 
-        public ShipRepository(ProgramContext context) {
+        public ShipRepository(ProgramContext context)
+        {
             _context = context;
         }
-        
-        public void AddShip(Ship ship)
+
+
+        public bool SaveChanges()
         {
-            _context.Ships.Add(ship);
-            _context.SaveChanges();
+            return _context.SaveChanges() > 0;
         }
 
-        public void DeleteShip(Ship ship)
+        public void AddShip<T>(T shipToAdd)
         {
-            _context.Ships.Remove(ship);
-            _context.SaveChanges();
+            if (shipToAdd != null)
+                _context.Add(shipToAdd);
         }
 
-        public IQueryable<Ship> GetAll()
+        public Ship GetShip(int id)
         {
-            var found = _context.Ships;
-            return found;
+            var ship = _context.Ships.Where(i => i.id == id).FirstOrDefault();
+            if (ship != null)
+                return ship;
+            return null;
         }
 
-        public Ship GetById(int id)
+        public void RemoveShip<T>(T ship)
         {
-            var found = _context.Ships.Find(id);
-            return found;
+            _context.Remove(ship);
         }
 
-        public void UpdateShip(Ship ship)
-        {
-            _context.Ships.Update(ship);
-            _context.SaveChanges();
-        }
+
+
+        /*        public void AddShip(Ship ship)
+                {
+                    _context.Ships.Add(ship);
+                    _context.SaveChanges();
+                }
+
+                public void DeleteShip(Ship ship)
+                {
+                    _context.Ships.Remove(ship);
+                    _context.SaveChanges();
+                }
+
+                public IQueryable<Ship> GetAll()
+                {
+                    var found = _context.Ships;
+                    return found;
+                }
+
+                public Ship GetById(int id)
+                {
+                    var found = _context.Ships.Find(id);
+                    return found;
+                }
+
+                public void UpdateShip(Ship ship)
+                {
+                    _context.Ships.Update(ship);
+                    _context.SaveChanges();
+                }*/
     }
 }

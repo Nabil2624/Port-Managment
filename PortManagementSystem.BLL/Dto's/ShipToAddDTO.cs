@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortManagementSystem.DAL.Models
+namespace PortManagementSystem.BLL.Dto_s
 {
-    public class Ship
+    public class ShipToAddDTO
     {
-        public int id { get; set; }
         public string name { get; set; }
         public string cargoType { get; set; }
         public DateTime EAT { get; set; }
@@ -16,10 +15,6 @@ namespace PortManagementSystem.DAL.Models
         public string destination { get; set; }
         public double length { get; set; }
         public double width { get; set; }
-        public string status { get; set; }
-        public int? terminalId { get; set; }  //Nullable
-        public Terminal? terminal { get; set; }
-        public int userId { get; set; }
-        public User? user { get; set; }
+
     }
 }

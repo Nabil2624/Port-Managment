@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PortManagementSystem.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,25 @@ namespace PortManagementSystem.DAL.Database
 {
     public class ProgramContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        private readonly IConfiguration _config;
+
+        public ProgramContext(IConfiguration config)
         {
-            base.OnModelCreating(modelBuilder);
+            _config = config;
         }
 
-        public ProgramContext(DbContextOptions<ProgramContext> options) : base(options)
-        {
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_config.GetConnectionString("DefaultConnection"),
+                    optionsBuilder => optionsBuilder.EnableRetryOnFailure());
+            }
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ship>().Property(i => i.terminalId).IsRequired(false);
         }
 
 
