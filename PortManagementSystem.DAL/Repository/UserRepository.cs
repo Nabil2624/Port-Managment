@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PortManagementSystem.DAL.Repository
 {
@@ -44,6 +45,11 @@ namespace PortManagementSystem.DAL.Repository
         {
             _context.Users.Update(user);
             _context.SaveChanges();
+        }
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            var found = await _context.Users.FirstOrDefaultAsync(u => u.email == email);
+            return found;
         }
     }
 }

@@ -10,7 +10,8 @@ namespace PortManagementSystem.DAL.Models
     {
         public int id { get; set; }
         public string username { get; set; }
-        public string password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public string email { get; set; }
         public string role { get; set; }
         public ICollection<Ship> ships { get; set; }

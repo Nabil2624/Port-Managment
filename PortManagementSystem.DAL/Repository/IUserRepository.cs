@@ -14,5 +14,6 @@ namespace PortManagementSystem.DAL.Repository
         public void DeleteUser(User user);
         public IQueryable<User> GetAll();
         public User GetById(int id);
+        public Task<User> GetUserByEmailAsync(string email);
     }
 }
