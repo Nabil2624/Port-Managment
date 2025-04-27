@@ -41,37 +41,5 @@ namespace PortManagementSystem.DAL.Repository
         {
             _context.Remove(ship);
         }
-
-
-
-        /*        public void AddShip(Ship ship)
-                {
-                    _context.Ships.Add(ship);
-                    _context.SaveChanges();
-                }
-
-                public void DeleteShip(Ship ship)
-                {
-                    _context.Ships.Remove(ship);
-                    _context.SaveChanges();
-                }
-
-                public IQueryable<Ship> GetAll()
-                {
-                    var found = _context.Ships;
-                    return found;
-                }
-
-                public Ship GetById(int id)
-                {
-                    var found = _context.Ships.Find(id);
-                    return found;
-                }
-
-                public void UpdateShip(Ship ship)
-                {
-                    _context.Ships.Update(ship);
-                    _context.SaveChanges();
-                }*/
     }
 }
