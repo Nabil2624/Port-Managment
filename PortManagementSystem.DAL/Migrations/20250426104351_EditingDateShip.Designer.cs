@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortManagementSystem.DAL.Database;
 
@@ -11,9 +12,11 @@ using PortManagementSystem.DAL.Database;
 namespace PortManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    partial class ProgramContextModelSnapshot : ModelSnapshot
+    [Migration("20250426104351_EditingDateShip")]
+    partial class EditingDateShip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,14 @@ namespace PortManagementSystem.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<DateTime>("EAT")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateOnly>("EATDate")
                         .HasColumnType("date");
+
+                    b.Property<DateTime>("EDT")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateOnly>("EDTDate")
                         .HasColumnType("date");
@@ -97,43 +106,6 @@ namespace PortManagementSystem.DAL.Migrations
                     b.HasIndex("shipId");
 
                     b.ToTable("Shipments");
-                });
-
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.ShipsWaiting", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
-
-                    b.Property<DateOnly>("EATDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("EDTDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("cargoType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("shipId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("shipsWaitingTable");
                 });
 
             modelBuilder.Entity("PortManagementSystem.DAL.Models.Terminal", b =>

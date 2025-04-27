@@ -11,8 +11,8 @@ namespace PortManagementSystem.BLL.Dto_s
         public int id { get; set; }
         public string name { get; set; }
         public string cargoType { get; set; }
-        public DateTime EAT { get; set; }
-        public DateTime EDT { get; set; }
+        public DateOnly EATDate { get; set; }
+        public DateOnly EDTDate { get; set; }
         public string destination { get; set; }
         public double length { get; set; }
         public double width { get; set; }

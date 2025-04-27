@@ -68,7 +68,7 @@ namespace PortManagementSystem.BLL.Managers
         {
             var shipdb = _mapper.Map<Ship>(ships);
             shipdb.status = "Arriving";
-            shipdb.userId = 1;          //Should fetch the value from the Authentication Token
+            shipdb.userId = 2;          //Should fetch the value from the Authentication Token
             //shipdb.terminalId = null;         //Should be nallable      ******Terminal is assinged after the ship has arrived*******
             return shipdb;
         }
@@ -76,8 +76,8 @@ namespace PortManagementSystem.BLL.Managers
         public void UpdatingShipProperties(Ship shipdb, ShipToEditDTO ship)
         {
             shipdb.cargoType = ship.cargoType;
-            shipdb.EAT = ship.EAT;
-            shipdb.EDT = ship.EDT;
+            shipdb.EATDate = ship.EATDate;
+            shipdb.EDTDate = ship.EDTDate;
             shipdb.destination = ship.destination;
             shipdb.length = ship.length;
             shipdb.width = ship.width;
