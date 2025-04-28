@@ -30,6 +30,7 @@ namespace PortManagementSystem.DAL.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ship>().Property(i => i.terminalId).IsRequired(false);
+
         }
 
 
@@ -37,5 +38,6 @@ namespace PortManagementSystem.DAL.Database
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<Terminal> Terminals { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ShipsWaiting> shipsWaitingTable {  get; set; }
     }
 }

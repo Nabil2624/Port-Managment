@@ -56,6 +56,9 @@ internal class Program
         builder.Services.AddScoped<IShipServices, ShipServices>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<ITerminalRepository,TerminalRepository>();
+        builder.Services.AddScoped<ITerminalServices, TerminalServices>();
+
 
         builder.Services.AddDbContext<ProgramContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
