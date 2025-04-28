@@ -100,8 +100,21 @@ namespace PortManagementSystem.API.Controllers
                             ship.terminalId = availableterminals[i].id;
                             availableterminals[i].status = "Busy";
                             _context.shipsWaitingTable.Remove(anchorOutShips[j]);
-                            _context.ChangeTracker.Entries();
-                            _context.SaveChanges();
+                            _context.ChangeTracker.Entries<Ship>();
+                            _context.ChangeTracker.Entries<Terminal>();
+                            
+                            
+                            try
+                            {
+                                _context.SaveChanges();
+                            }
+                            
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                            
                         }
                     }
                 }

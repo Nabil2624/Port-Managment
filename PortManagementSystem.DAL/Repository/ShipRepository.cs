@@ -42,6 +42,12 @@ namespace PortManagementSystem.DAL.Repository
             _context.Remove(ship);
         }
 
+        public IQueryable<Ship> GetAll()
+        {
+            var found = _context.Ships;
+            return found;
+        }
+
 
 
         /*        public void AddShip(Ship ship)
@@ -56,11 +62,6 @@ namespace PortManagementSystem.DAL.Repository
                     _context.SaveChanges();
                 }
 
-                public IQueryable<Ship> GetAll()
-                {
-                    var found = _context.Ships;
-                    return found;
-                }
 
                 public Ship GetById(int id)
                 {

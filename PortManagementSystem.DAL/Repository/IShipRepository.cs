@@ -14,11 +14,11 @@ namespace PortManagementSystem.DAL.Repository
         public void AddShip<T>(T shipToAdd);
         public Ship GetShip(int id);
         public void RemoveShip<T>(T ship);
+        public IQueryable<Ship> GetAll();
 
         /*public void AddShip(Ship ship);
         public void UpdateShip(Ship ship);
         public void DeleteShip(Ship ship);
-        public IQueryable<Ship> GetAll();
         public Ship GetById(int id);*/
     }
 }

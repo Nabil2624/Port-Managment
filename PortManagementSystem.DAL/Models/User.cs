@@ -15,5 +15,6 @@ namespace PortManagementSystem.DAL.Models
         public string email { get; set; }
         public string role { get; set; }
         public ICollection<Ship> ships { get; set; }
+        public ICollection<TempShip> tempShips { get; set; }
     }
 }

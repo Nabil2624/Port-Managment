@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PortManagementSystem.BLL.Dto_s
+{
+    public class TempWaitingShipsReadDto
+    {
+        public int id { get; set; }
+        public int shipId { get; set; }
+        public string name { get; set; }
+        public string cargoType { get; set; }
+
+        public DateOnly EATDate { get; set; }
+        public DateOnly EDTDate { get; set; }
+        public string status { get; set; }
+        public int Duration { get; set; }  //Use .AddDays(Duration) to edit the EDTDate 
+
+
+    }
+}

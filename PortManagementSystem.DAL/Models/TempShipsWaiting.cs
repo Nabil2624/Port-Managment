@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace PortManagementSystem.DAL.Models
 {
-    public class Ship
+    public class TempShipsWaiting
     {
         public int id { get; set; }
+        public int shipId { get; set; }
+        public TempShip? ship {  get; set; } 
         public string name { get; set; }
         public string cargoType { get; set; }
-        public DateOnly EATDate {  get; set; }
+        public DateOnly EATDate { get; set; }
         public DateOnly EDTDate { get; set; }
-        public string destination { get; set; }
-        public double length { get; set; }
-        public double width { get; set; }
         public string status { get; set; }
-        public int? terminalId { get; set; }  //Nullable
-        public Terminal? terminal { get; set; }
-        public int userId { get; set; }
-        public User? user { get; set; }
+        public int Duration { get; set; }  //Use .AddDays(Duration) to edit the EDTDate
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortManagementSystem.DAL.Database;
 
@@ -11,9 +12,11 @@ using PortManagementSystem.DAL.Database;
 namespace PortManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    partial class ProgramContextModelSnapshot : ModelSnapshot
+    [Migration("20250428213344_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,10 @@ namespace PortManagementSystem.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateOnly>("EATDate")
+                    b.Property<DateOnly>("EAT")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("EDTDate")
+                    b.Property<DateOnly>("EDT")
                         .HasColumnType("date");
 
                     b.Property<string>("cargoType")

@@ -55,6 +55,12 @@ internal class Program
         builder.Services.AddScoped<IShipServices, ShipServices>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<ITempShipManager, TempShipManager>();
+        builder.Services.AddScoped<ITempShipRepository, TempShipRepository>();
+        builder.Services.AddScoped<ITempShipWaitingRepository, TempShipWaitingRepostiory>();
+        builder.Services.AddScoped<ITempWaitingShipsManager , TempWaitingShipManager>();
+        builder.Services.AddScoped<ITempTerminalManager , TempTerminalManager>();
+        builder.Services.AddScoped<ITerminalTempRepository , TempTerminalRepository>();
 
         builder.Services.AddDbContext<ProgramContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortManagementSystem.DAL.Database;
 
@@ -11,9 +12,11 @@ using PortManagementSystem.DAL.Database;
 namespace PortManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    partial class ProgramContextModelSnapshot : ModelSnapshot
+    [Migration("20250427211234_test1")]
+    partial class test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,117 +139,6 @@ namespace PortManagementSystem.DAL.Migrations
                     b.ToTable("shipsWaitingTable");
                 });
 
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.TempShip", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<DateOnly>("EATDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("EDTDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("cargoType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("destination")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("length")
-                        .HasColumnType("float");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("tempTerminalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("tempUserId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("width")
-                        .HasColumnType("float");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("tempTerminalId");
-
-                    b.HasIndex("tempUserId");
-
-                    b.ToTable("TempShips");
-                });
-
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.TempShipsWaiting", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("EATDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("EDTDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("cargoType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("shipId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("shipId");
-
-                    b.ToTable("TempShipsWaiting");
-                });
-
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.TempTerminal", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("classification")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("TempTerminals");
-                });
-
             modelBuilder.Entity("PortManagementSystem.DAL.Models.Terminal", b =>
                 {
                     b.Property<int>("id")
@@ -329,40 +221,6 @@ namespace PortManagementSystem.DAL.Migrations
                     b.Navigation("ship");
                 });
 
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.TempShip", b =>
-                {
-                    b.HasOne("PortManagementSystem.DAL.Models.TempTerminal", "tempTerminal")
-                        .WithMany("tempShips")
-                        .HasForeignKey("tempTerminalId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PortManagementSystem.DAL.Models.User", "tempUser")
-                        .WithMany("tempShips")
-                        .HasForeignKey("tempUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("tempTerminal");
-
-                    b.Navigation("tempUser");
-                });
-
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.TempShipsWaiting", b =>
-                {
-                    b.HasOne("PortManagementSystem.DAL.Models.TempShip", "ship")
-                        .WithMany()
-                        .HasForeignKey("shipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ship");
-                });
-
-            modelBuilder.Entity("PortManagementSystem.DAL.Models.TempTerminal", b =>
-                {
-                    b.Navigation("tempShips");
-                });
-
             modelBuilder.Entity("PortManagementSystem.DAL.Models.Terminal", b =>
                 {
                     b.Navigation("ships");
@@ -371,8 +229,6 @@ namespace PortManagementSystem.DAL.Migrations
             modelBuilder.Entity("PortManagementSystem.DAL.Models.User", b =>
                 {
                     b.Navigation("ships");
-
-                    b.Navigation("tempShips");
                 });
 #pragma warning restore 612, 618
         }
