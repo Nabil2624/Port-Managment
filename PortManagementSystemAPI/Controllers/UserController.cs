@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PortManagementSystem.BLL.Dto_s;
 using PortManagementSystem.BLL.Managers;
+using System.Security.Claims;
 
 namespace PortManagementSystem.API.Controllers
 {
@@ -17,7 +18,7 @@ namespace PortManagementSystem.API.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("add")]
+        [HttpPost("addUser")]
         public IActionResult AddUser([FromBody] UserDTO userDTO)
         {
             if (userDTO == null)
@@ -28,8 +29,19 @@ namespace PortManagementSystem.API.Controllers
             return Ok("User added successfully");
         }
 
+        [HttpPost("addAdmin")]
+        public IActionResult AddAdmin([FromBody] AdminDTO adminDTO)
+        {
+            if (adminDTO == null)
+            {
+                return BadRequest("Invalid user data");
+            }
+            _userService.AddAdmin(adminDTO);
+            return Ok("Admin added successfully");
+        }
+
         [HttpPut("edit/{id}")]
-        public IActionResult EditUser(int id, [FromBody] UserDTO userDTO)
+        public IActionResult EditUser(int id, [FromBody] UserEditDTO userDTO)
         {
             if (userDTO == null)
             {
@@ -47,6 +59,32 @@ namespace PortManagementSystem.API.Controllers
                 return BadRequest("Invalid user ID");
             }
             _userService.RemoveUser(id);
+            return Ok("User removed successfully");
+        }
+
+        [AllowAnonymous]
+        [HttpPut("editSelf")]
+        public IActionResult UserEditSelf([FromBody] UserEditHisSelfDTO userDTO)
+        {
+            int UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (userDTO == null)
+            {
+                return BadRequest("Invalid user data");
+            }
+            _userService.UserEditHisSelf(userDTO, UserId);
+            return Ok("User updated successfully");
+        }
+
+        [AllowAnonymous]
+        [HttpDelete("removeSelf")]
+        public IActionResult UserRemoveHisSelf()
+        {
+            int UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (UserId <= 0)
+            {
+                return BadRequest("Invalid user ID");
+            }
+            _userService.UserRemoveHisSelf(UserId);
             return Ok("User removed successfully");
         }
     }

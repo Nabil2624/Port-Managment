@@ -10,8 +10,11 @@ namespace PortManagementSystem.BLL.Managers
     public interface IUserService
     {
         void AddUser(UserDTO dto);
-        void EditUser(int id, UserDTO dto);
+        void AddAdmin(AdminDTO dto);
+        void EditUser(int id, UserEditDTO dto);
         void RemoveUser(int id);
+        void UserEditHisSelf(UserEditHisSelfDTO dto, int userId);
+        void UserRemoveHisSelf(int userId);
 
     }
 }

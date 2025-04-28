@@ -5,6 +5,7 @@ using PortManagementSystem.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,14 +65,7 @@ namespace PortManagementSystem.BLL.Managers
 
 
         //Helping Methods
-        public Ship MappingShips(ShipToAddDTO ships)
-        {
-            var shipdb = _mapper.Map<Ship>(ships);
-            shipdb.status = "Arriving";
-            shipdb.userId = 1;          //Should fetch the value from the Authentication Token
-            //shipdb.terminalId = null;         //Should be nallable      ******Terminal is assinged after the ship has arrived*******
-            return shipdb;
-        }
+        
 
         public void UpdatingShipProperties(Ship shipdb, ShipToEditDTO ship)
         {

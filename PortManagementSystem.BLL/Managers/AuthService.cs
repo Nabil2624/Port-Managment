@@ -18,11 +18,13 @@ namespace PortManagementSystem.BLL.Managers
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+
         public AuthService(IConfiguration configuration, IUserRepository userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;
         }
+
         public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO)
         {
             var user = await _userRepository.GetUserByEmailAsync(loginDTO.Email);
@@ -30,27 +32,33 @@ namespace PortManagementSystem.BLL.Managers
             {
                 throw new UnauthorizedAccessException("Invalid credentials");
             }
+
             var token = GenerateToken(user);
             return new TokenDTO { Token = token };
         }
+
         public string GenerateToken(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),  
                 new Claim(ClaimTypes.Email, user.email),
                 new Claim(ClaimTypes.Role, user.role)
             };
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AppSettings:TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds);
+
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             using (var hmac = new HMACSHA512(storedSalt))

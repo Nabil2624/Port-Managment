@@ -47,6 +47,7 @@ internal class Program
             });
         });
 
+
         // Dependency Injection
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
