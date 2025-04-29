@@ -24,15 +24,29 @@ namespace PortManagementSystem.BLL.Services
             {
                 username = dto.UserName,
                 email = dto.Email,
-                role = dto.Role,
                 PasswordHash = hash,
-                PasswordSalt = salt
+                PasswordSalt = salt,
+                role = "User"
             };
 
             _userRepository.AddUser(user);
         }
 
-        public void EditUser(int id, UserDTO dto)
+        public void AddAdmin(AdminDTO dto)
+        {
+            CreatePasswordHash(dto.Password, out byte[] hash, out byte[] salt);
+            var admin = new User
+            {
+                username = dto.UserName,
+                email = dto.Email,
+                PasswordHash = hash,
+                PasswordSalt = salt,
+                role = "Admin"
+            };
+            _userRepository.AddUser(admin);
+        }
+
+        public void EditUser(int id, UserEditDTO dto)
         {
             var existingUser = _userRepository.GetById(id);
             if (existingUser == null) return;
@@ -60,11 +74,42 @@ namespace PortManagementSystem.BLL.Services
             }
         }
 
+        public void UserEditHisSelf(UserEditHisSelfDTO dto, int userId)
+    {
+
+        var existingUser = _userRepository.GetById(userId);
+        if (existingUser == null) return;
+
+        existingUser.username = dto.UserName;
+        existingUser.email = dto.Email;
+
+
+        if (!string.IsNullOrEmpty(dto.Password))
+        {
+            CreatePasswordHash(dto.Password, out byte[] hash, out byte[] salt);
+            existingUser.PasswordHash = hash;
+            existingUser.PasswordSalt = salt;
+        }
+
+        _userRepository.UpdateUser(existingUser);
+    }
+
+    public void UserRemoveHisSelf(int userId)
+    {
+
+        var user = _userRepository.GetById(userId);
+        if (user != null)
+        {
+            _userRepository.DeleteUser(user);
+        }
+    }
+
         private void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
         {
             using var hmac = new HMACSHA512();
             salt = hmac.Key;
             hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
+
     }
 }

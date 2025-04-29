@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PortManagementSystem.BLL.Dto_s
 {
-    public class UserDTO
+    public class UserEditDTO
     {
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-
+        public string Role { get; set; } 
     }
 }

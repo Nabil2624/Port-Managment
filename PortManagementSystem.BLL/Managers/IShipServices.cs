@@ -10,7 +10,6 @@ namespace PortManagementSystem.BLL.Managers
 {
     public interface IShipServices
     {
-        public Ship MappingShips(ShipToAddDTO ships);
         public void UpdatingShipProperties(Ship shipdb, ShipToEditDTO ship);
         public bool AddingShips(Ship ship);
         public bool RemovingShip(int ShipId);
