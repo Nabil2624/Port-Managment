@@ -15,6 +15,7 @@ namespace PortManagementSystem.BLL.Managers
         public bool RemovingShip(int ShipId);
         public Ship RetriveShip(int shipId);
         public bool SavingChanges();
+        public IEnumerable<ShipToEditDTO> GetShipList();
 
     }
 }

@@ -84,5 +84,13 @@ namespace PortManagementSystem.API.Controllers
             //shipdb.terminalId = null;         //Should be nallable      ******Terminal is assinged after the ship has arrived*******
             return shipdb;
         }
+
+
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
+           var found = _services.GetShipList();
+           return Ok(found);
+        }
     }
 }

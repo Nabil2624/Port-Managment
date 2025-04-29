@@ -83,6 +83,23 @@ namespace PortManagementSystem.BLL.Managers
             shipdb.length = ship.length;
             shipdb.width = ship.width;
         }
+
+        public IEnumerable<ShipToEditDTO> GetShipList()
+        {
+            var foundModel = _repo.GetAll().ToList();
+            var found = foundModel.Select(a=> new ShipToEditDTO { 
+                cargoType = a.cargoType,
+                destination = a.destination,
+                EATDate = a.EATDate,
+                EDTDate = a.EDTDate,
+                id = a.id,
+                length = a.length,
+                name = a.name,
+                width = a.width,
+            });
+
+            return found;
+        }
     }
 }
 
