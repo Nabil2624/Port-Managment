@@ -21,5 +21,6 @@ namespace PortManagementSystem.DAL.Repository
         public List<ShipsWaiting> GetWaitingShips();
         public Ship GetShipFromWaitingTable(ShipsWaiting shipsWaiting);
         public void RemoveWaitingShip(ShipsWaiting ship);
+        public IQueryable<Terminal> GetAll();
     }
 }

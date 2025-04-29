@@ -41,5 +41,11 @@ namespace PortManagementSystem.DAL.Repository
         {
             _context.Remove(ship);
         }
+
+        public IQueryable<Ship> GetAll()
+        {
+            var found = _context.Ships;
+            return found;
+        }
     }
 }

@@ -89,5 +89,10 @@ namespace PortManagementSystem.DAL.Repository
             _context.shipsWaitingTable.Remove(ship);
         }
 
+        public IQueryable<Terminal> GetAll()
+        {
+            var found = _context.Terminals;
+            return found;
+        }
     }
 }
