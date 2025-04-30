@@ -10,7 +10,7 @@ namespace PortManagementSystem.API.Controllers
 {
     [ApiController]
     [Route("API/[Controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class ShipController : Controller
     {
         IShipServices _services;

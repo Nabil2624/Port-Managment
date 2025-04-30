@@ -21,22 +21,14 @@ namespace PortManagementSystem.API.Controllers
         }
         
         
-        [HttpPut("UpdateTerminal")]
-        public IActionResult UpdateTerminal (DateOnly today)
+        [HttpPut("SevenDayForecast")]
+        public IActionResult SevenDayForecast(DateOnly today)
         {
             _tempTerminalManager.AddTempTerminal();
             _tempShipManager.AddTempShip();
-           // _tempWaitingShipManager.AddTempWaitingShip();
+            _tempTerminalManager.AddTempTerminal();
 
-            var ships = _tempShipManager.GetAllTempShips();
-            var terminals = _tempTerminalManager.GetAllTempTerminals().ToList();
-            var anchorOutShips = _tempWaitingShipManager.GetAllTempWaitingShips().ToList();
-
-            var Arrivingships = ships.Where(d => d.EATDate == today && d.status == "Arriving").ToList();
-            var departuredShips =ships.Where(d => d.EDTDate == today && d.status == "At Port").ToList();
-            var availableTerminals = terminals.Where(a => a.status == "Available").ToList();
-
-           var log = _tempTerminalManager.UpdateTempTerminal(Arrivingships, departuredShips, availableTerminals , today);
+          var log = _tempTerminalManager.ForecastNextSevenDays(today);
 
             return Ok(log);
 

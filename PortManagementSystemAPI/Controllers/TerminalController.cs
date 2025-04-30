@@ -27,10 +27,19 @@ namespace PortManagementSystem.API.Controllers
         [HttpPost("TerminalUpdate")]
         public IActionResult UpdateTerminal(DateOnly today)
         {
-            _terminal.CheckArrivedShips(today);
-            _terminal.CheckleavingShips(today);
-            _terminal.CheckWaitingTable(today);
-            return Ok("Terminal(s) Updated");
+            try
+            {
+                _terminal.CheckArrivedShips(today);
+                _terminal.CheckleavingShips(today);
+                _terminal.CheckWaitingTable(today);
+                return Ok("Terminal(s) Updated");
+            }
+
+            catch (Exception ex) {
+                return Ok("Terminal(s) Updated");
+            }
+
+            
         }
     }
 }

@@ -102,7 +102,7 @@ internal class Program
             var context = scope.ServiceProvider.GetRequiredService<ProgramContext>();
             context.Database.EnsureCreated();
 
-            // Check if no users exist
+            //Check if no users exist
             if (!context.Users.Any())
             {
                 var hmac = new HMACSHA512();

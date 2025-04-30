@@ -56,8 +56,7 @@ namespace PortManagementSystem.BLL.Managers
             return found;
         }
 
-        public List<DailyChangesDto> UpdateTempTerminal(List<TempShipReadDto> arrivingShips, List<TempShipReadDto> departuredShips,
-    List<TempTerminalReadDto> availableTerminals, DateOnly today)
+        public List<DailyChangesDto> ForecastNextSevenDays(DateOnly today)
         {
             List<DailyChangesDto> snapshots = new List<DailyChangesDto>();
 
@@ -66,10 +65,13 @@ namespace PortManagementSystem.BLL.Managers
                 var currentDate = today.AddDays(day);
 
                 // Handle Arriving Ships
-                var todayArrivals = arrivingShips.Where(a => a.EATDate == currentDate && a.status == "Arriving").ToList();
-                foreach (var arrival in todayArrivals)
+                var arrivingShips = _tempShipRepository.GetAllTempShips()
+                    .Where(d => d.EATDate == currentDate && d.status == "Arriving")
+                    .ToList();
+
+                foreach (var arrival in arrivingShips)
                 {
-                    var waitingShip = new TempShipsWaiting
+                    var ship = new TempShipsWaiting
                     {
                         shipId = arrival.id,
                         name = arrival.name,
@@ -79,13 +81,18 @@ namespace PortManagementSystem.BLL.Managers
                         status = "Anchor out",
                         Duration = arrival.EDTDate.DayNumber - arrival.EATDate.DayNumber
                     };
-                    _tempWaitingShipRepository.AddWaitingTempShip(waitingShip);
+
+                    _tempWaitingShipRepository.AddWaitingTempShip(ship);
                     arrival.status = "Anchor out";
+                    _tempShipRepository.UpdateTempShip(arrival);
                 }
 
-                // Handle Departing Ships
-                var todayDepartures = departuredShips.Where(d => d.EDTDate == currentDate && d.status == "At Port").ToList();
-                foreach (var departure in todayDepartures)
+                // Handle Departed Ships
+                var departuredShips = _tempShipRepository.GetAllTempShips()
+                    .Where(d => d.EDTDate == currentDate && d.status == "At Port")
+                    .ToList();
+
+                foreach (var departure in departuredShips)
                 {
                     if (departure.tempTerminalId.HasValue)
                     {
@@ -97,37 +104,20 @@ namespace PortManagementSystem.BLL.Managers
                     departure.tempTerminalId = null;
                     departure.status = "Departed";
 
-                    _tempShipRepository.UpdateTempShip(new TempShip
-                    {
-                        status = departure.status,
-                        tempTerminalId = departure.tempTerminalId,
-                        cargoType = departure.cargoType,
-                        destination = departure.destination,
-                        EATDate = departure.EATDate,
-                        EDTDate = departure.EDTDate,
-                        length = departure.length,
-                        name = departure.name,
-                        width = departure.width,
-                        tempUserId = departure.userId
-                    });
+                    _tempShipRepository.UpdateTempShip(departure);
                 }
 
-                // Refresh available terminals and anchor out ships
-                availableTerminals = _tempTerminalRepository.GetAllTempTerminals()
-                    .Where(t => t.status == "Available")
-                    .Select(t => new TempTerminalReadDto
-                    {
-                        id = t.id,
-                        classification = t.classification,
-                        status = t.status
-                    }).ToList();
-
+                // Refresh state
                 var anchorOutShips = _tempWaitingShipRepository.GetAllTempWaitingShips().ToList();
+                var availableTerminals = _tempTerminalRepository.GetAllTempTerminals()
+                    .Where(t => t.status == "Available")
+                    .ToList();
 
-                // Handle Assigning Waiting Ships to Available Terminals
+                // Assign waiting ships to available terminals
                 foreach (var terminal in availableTerminals.ToList())
                 {
                     var matchedShip = anchorOutShips.FirstOrDefault(s => s.cargoType == terminal.classification);
+
                     if (matchedShip != null)
                     {
                         var tempShip = _tempShipRepository.GetTempById(matchedShip.shipId);
@@ -138,56 +128,53 @@ namespace PortManagementSystem.BLL.Managers
 
                         _tempShipRepository.UpdateTempShip(tempShip);
 
-                        var terminalEntity = _tempTerminalRepository.GetTempTerminalById(terminal.id);
-                        terminalEntity.status = "Busy";
-                        _tempTerminalRepository.UpdateTempTerminal(terminalEntity);
+                        terminal.status = "Busy";
+                        _tempTerminalRepository.UpdateTempTerminal(terminal);
 
-                        var waitingShipModel = _tempWaitingShipRepository.GetTempWaitingShipsWaitingById(matchedShip.id);
-                        _tempWaitingShipRepository.DeleteTempWaitingShips(waitingShipModel);
+                        var waitingModel = _tempWaitingShipRepository.GetTempWaitingShipsWaitingById(matchedShip.id);
+                        _tempWaitingShipRepository.DeleteTempWaitingShips(waitingModel);
 
                         anchorOutShips.Remove(matchedShip);
-                        availableTerminals.Remove(terminal);
                     }
                 }
 
-                // ---- Take snapshot after today's changes ----
-
+                // Snapshot of daily changes
                 var snapshot = new DailyChangesDto
                 {
                     Date = currentDate,
                     Ships = _tempShipRepository.GetAllTempShips()
-                                .Select(s => new TempShipReadDto
-                                {
-                                    id = s.id,
-                                    name = s.name,
-                                    cargoType = s.cargoType,
-                                    EATDate = s.EATDate,
-                                    EDTDate = s.EDTDate,
-                                    status = s.status,
-                                    tempTerminalId = s.tempTerminalId,
-                                    userId = s.tempUserId
-                                }).ToList(),
+                        .Select(s => new TempShipReadDto
+                        {
+                            id = s.id,
+                            name = s.name,
+                            cargoType = s.cargoType,
+                            EATDate = s.EATDate,
+                            EDTDate = s.EDTDate,
+                            status = s.status,
+                            tempTerminalId = s.tempTerminalId,
+                            userId = s.tempUserId
+                        }).ToList(),
 
                     Terminals = _tempTerminalRepository.GetAllTempTerminals()
-                                .Select(t => new TempTerminalReadDto
-                                {
-                                    id = t.id,
-                                    classification = t.classification,
-                                    status = t.status
-                                }).ToList(),
+                        .Select(t => new TempTerminalReadDto
+                        {
+                            id = t.id,
+                            classification = t.classification,
+                            status = t.status
+                        }).ToList(),
 
                     WaitingShips = _tempWaitingShipRepository.GetAllTempWaitingShips()
-                                .Select(w => new TempWaitingShipsReadDto
-                                {
-                                    id = w.id,
-                                    shipId = w.shipId,
-                                    name = w.name,
-                                    cargoType = w.cargoType,
-                                    EATDate = w.EATDate,
-                                    EDTDate = w.EDTDate,
-                                    status = w.status,
-                                    Duration = w.Duration
-                                }).ToList()
+                        .Select(w => new TempWaitingShipsReadDto
+                        {
+                            id = w.id,
+                            shipId = w.shipId,
+                            name = w.name,
+                            cargoType = w.cargoType,
+                            EATDate = w.EATDate,
+                            EDTDate = w.EDTDate,
+                            status = w.status,
+                            Duration = w.Duration
+                        }).ToList()
                 };
 
                 snapshots.Add(snapshot);
@@ -196,4 +183,4 @@ namespace PortManagementSystem.BLL.Managers
             return snapshots;
         }
     }
-    }
+}

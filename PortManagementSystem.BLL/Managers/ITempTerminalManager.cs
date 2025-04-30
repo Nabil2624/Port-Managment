@@ -12,7 +12,6 @@ namespace PortManagementSystem.BLL.Managers
     {
         public void AddTempTerminal();
         public IEnumerable<TempTerminalReadDto> GetAllTempTerminals();
-       public List<DailyChangesDto> UpdateTempTerminal(List<TempShipReadDto> arrivingShips, List<TempShipReadDto> departuredShips,
-            List<TempTerminalReadDto> availableTerminals , DateOnly today);
+        public List<DailyChangesDto> ForecastNextSevenDays(DateOnly today);
     }
 }
