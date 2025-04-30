@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PortManagementSystem.BLL.Dto_s;
 using PortManagementSystem.DAL.Models;
 using PortManagementSystem.DAL.Repository;
 using System;
@@ -114,5 +115,18 @@ namespace PortManagementSystem.BLL.Managers
             }
         }
 
+        public IEnumerable<TempTerminalReadDto> GetAll()
+        {
+            var foundModel = _repo.GetAll().ToList();
+
+            var found = foundModel.Select(a => new TempTerminalReadDto
+            {
+                classification = a.classification,
+                status = a.status,
+                id = a.id,
+            });
+
+            return found;
+        }
     }
 }

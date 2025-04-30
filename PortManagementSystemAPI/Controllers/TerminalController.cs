@@ -41,5 +41,13 @@ namespace PortManagementSystem.API.Controllers
 
             
         }
+
+        [HttpGet("ViewAllTerminals")]
+        public IActionResult GetAll()
+        {
+            var found = _terminal.GetAll();
+            return Ok(found);
+
+        }
     }
 }
