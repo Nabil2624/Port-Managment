@@ -84,10 +84,10 @@ namespace PortManagementSystem.BLL.Managers
             shipdb.width = ship.width;
         }
 
-        public IEnumerable<ShipToEditDTO> GetShipList()
+        public IEnumerable<ShipToReadDTO> GetShipList()
         {
             var foundModel = _repo.GetAll().ToList();
-            var found = foundModel.Select(a=> new ShipToEditDTO { 
+            var found = foundModel.Select(a=> new ShipToReadDTO { 
                 cargoType = a.cargoType,
                 destination = a.destination,
                 EATDate = a.EATDate,
@@ -96,6 +96,8 @@ namespace PortManagementSystem.BLL.Managers
                 length = a.length,
                 name = a.name,
                 width = a.width,
+                status = a.status,
+                terminalId = a.terminalId,
             });
 
             return found;
