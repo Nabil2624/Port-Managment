@@ -11,6 +11,9 @@ namespace PortManagementSystem.BLL.Dto_s
         public int id {  get; set; }
         public string classification { get; set; }
         public string status { get; set; }
+        public string name { get; set; }
+        public DateOnly EATDate { get; set; }
+        public DateOnly EDTDate { get; set; }
 
     }
 }

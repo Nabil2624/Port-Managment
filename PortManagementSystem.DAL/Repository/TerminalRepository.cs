@@ -1,4 +1,5 @@
-﻿using PortManagementSystem.DAL.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using PortManagementSystem.DAL.Database;
 using PortManagementSystem.DAL.Migrations;
 using PortManagementSystem.DAL.Models;
 using System;

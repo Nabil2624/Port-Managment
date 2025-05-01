@@ -1,4 +1,5 @@
-﻿using PortManagementSystem.DAL.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using PortManagementSystem.DAL.Database;
 using PortManagementSystem.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,14 @@ namespace PortManagementSystem.DAL.Repository
         public IQueryable<Ship> GetAll()
         {
             var found = _context.Ships;
+            return found;
+        }
+
+        public IQueryable<Ship> ViewFullShipDetails()
+        {
+            var found = _context.Ships
+                            .Include(a => a.terminal);
+
             return found;
         }
     }

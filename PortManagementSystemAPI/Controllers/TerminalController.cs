@@ -46,7 +46,11 @@ namespace PortManagementSystem.API.Controllers
         public IActionResult GetAll()
         {
             var found = _terminal.GetAll();
-            return Ok(found);
+            if (found != null)
+            {
+                return Ok(found);
+            }
+            return NotFound();
 
         }
     }

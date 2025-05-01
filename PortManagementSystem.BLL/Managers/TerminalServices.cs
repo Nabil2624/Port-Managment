@@ -13,9 +13,12 @@ namespace PortManagementSystem.BLL.Managers
     public class TerminalServices : ITerminalServices
     {
         ITerminalRepository _repo;
-        public TerminalServices(ITerminalRepository terminalRepository)
+        private IShipRepository _srepo;
+
+        public TerminalServices(ITerminalRepository terminalRepository , IShipRepository shipRepository)
         {
             _repo = terminalRepository;
+            _srepo = shipRepository;
         }
 
 
@@ -117,16 +120,25 @@ namespace PortManagementSystem.BLL.Managers
 
         public IEnumerable<TempTerminalReadDto> GetAll()
         {
-            var foundModel = _repo.GetAll().ToList();
+            var foundModel = _srepo.GetAll();
 
+            
             var found = foundModel.Select(a => new TempTerminalReadDto
             {
-                classification = a.classification,
+                classification = a.terminal.classification,
                 status = a.status,
                 id = a.id,
+                EATDate = a.EATDate,
+                EDTDate = a.EDTDate,
+                name = a.name
+                
             });
 
-            return found;
+            if (found != null){
+                return found;
+            }
+
+            return null;
         }
     }
 }
