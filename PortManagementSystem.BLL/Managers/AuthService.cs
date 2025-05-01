@@ -43,7 +43,8 @@ namespace PortManagementSystem.BLL.Managers
             {
                 new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),  
                 new Claim(ClaimTypes.Email, user.email),
-                new Claim(ClaimTypes.Role, user.role)
+                new Claim(ClaimTypes.Role, user.role),
+                new Claim(ClaimTypes.Name , user.username),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AppSettings:TokenKey"]));
