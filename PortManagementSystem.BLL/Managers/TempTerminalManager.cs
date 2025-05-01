@@ -5,6 +5,7 @@ using PortManagementSystem.DAL.Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -141,40 +142,14 @@ namespace PortManagementSystem.BLL.Managers
                 // Snapshot of daily changes
                 var snapshot = new DailyChangesDto
                 {
-                    Date = currentDate,
+                    Date = currentDate.ToString("dddd", CultureInfo.InvariantCulture),
                     Ships = _tempShipRepository.GetAllTempShips()
-                        .Select(s => new TempShipReadDto
+                        .Select(s => new ShipForecastReadDto
                         {
-                            id = s.id,
                             name = s.name,
                             cargoType = s.cargoType,
-                            EATDate = s.EATDate,
-                            EDTDate = s.EDTDate,
                             status = s.status,
-                            tempTerminalId = s.tempTerminalId,
-                            userId = s.tempUserId
                         }).ToList(),
-
-                    Terminals = _tempTerminalRepository.GetAllTempTerminals()
-                        .Select(t => new TempTerminalReadDto
-                        {
-                            id = t.id,
-                            classification = t.classification,
-                            status = t.status
-                        }).ToList(),
-
-                    WaitingShips = _tempWaitingShipRepository.GetAllTempWaitingShips()
-                        .Select(w => new TempWaitingShipsReadDto
-                        {
-                            id = w.id,
-                            shipId = w.shipId,
-                            name = w.name,
-                            cargoType = w.cargoType,
-                            EATDate = w.EATDate,
-                            EDTDate = w.EDTDate,
-                            status = w.status,
-                            Duration = w.Duration
-                        }).ToList()
                 };
 
                 snapshots.Add(snapshot);

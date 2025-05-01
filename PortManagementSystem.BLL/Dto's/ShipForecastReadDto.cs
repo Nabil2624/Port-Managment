@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PortManagementSystem.BLL.Dto_s
 {
-    public class DailyChangesDto
+    public class ShipForecastReadDto
     {
-        public string Date { get; set; }
-        public List<ShipForecastReadDto> Ships { get; set; } = new List<ShipForecastReadDto>();
-
+        public string name { get; set; }
+        public string cargoType { get; set; }
+        public string status { get; set; }
     }
 }
