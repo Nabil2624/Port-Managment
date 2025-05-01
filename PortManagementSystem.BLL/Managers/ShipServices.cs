@@ -102,6 +102,24 @@ namespace PortManagementSystem.BLL.Managers
 
             return found;
         }
+
+        public int GetShipsCount()
+        {
+            var found = _repo.GetAll().Count();
+            return found;
+        }
+
+        public int GetDangerousCargoShipsCount()
+        {
+            var found  =_repo.GetAll().Where(a=>a.cargoType == "Dangerous").Count();
+            return found;
+        }
+
+        public int GetLeavingCount()
+        {
+            var found = _repo.GetAll().Where(a => a.status == "Departed").Count();
+            return found;
+        }
     }
 }
 

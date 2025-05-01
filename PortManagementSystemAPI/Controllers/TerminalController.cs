@@ -54,5 +54,11 @@ namespace PortManagementSystem.API.Controllers
             return NotFound();
 
         }
+        [HttpGet("GetAvailableCount")]
+        public IActionResult GetAvailableCount()
+        {
+            var found = _terminal.GetAvillableTerminalsNumber();
+            return Ok(found);
+        }
     }
 }

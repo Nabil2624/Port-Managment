@@ -16,6 +16,9 @@ namespace PortManagementSystem.BLL.Managers
         public Ship RetriveShip(int shipId);
         public bool SavingChanges();
         public IEnumerable<ShipToReadDTO> GetShipList();
+        public int GetShipsCount();
+        public int GetDangerousCargoShipsCount();
+        public int GetLeavingCount ();
 
     }
 }

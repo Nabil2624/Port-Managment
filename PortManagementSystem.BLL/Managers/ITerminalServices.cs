@@ -14,5 +14,6 @@ namespace PortManagementSystem.BLL.Managers
         public void CheckleavingShips(DateOnly today);
         public void CheckWaitingTable(DateOnly today);
         public IEnumerable<TempTerminalReadDto> GetAll();
+        public int GetAvillableTerminalsNumber();
     }
 }

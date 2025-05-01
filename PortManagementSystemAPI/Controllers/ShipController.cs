@@ -92,5 +92,24 @@ namespace PortManagementSystem.API.Controllers
            var found = _services.GetShipList();
            return Ok(found);
         }
+
+        [HttpGet("ViewShipsCount")]
+        public IActionResult GetShipsCount()
+        {
+            var number = _services.GetShipsCount();
+            return Ok(number);
+        }
+        [HttpGet("ViewDangerousShipsCount")]
+        public IActionResult GetDangerousShipsCount()
+        {
+            var found = _services.GetDangerousCargoShipsCount();
+            return Ok(found);
+        }
+        [HttpGet("ViewLeavingCount")]
+        public IActionResult GetLeavingCount()
+        {
+            var found = _services.GetLeavingCount();
+            return Ok(found);
+        }
     }
 }

@@ -163,5 +163,11 @@ namespace PortManagementSystem.BLL.Managers
 
             return result;
         }
+
+        public int GetAvillableTerminalsNumber()
+        {
+            var found = _repo.GetAll().Where(a=>a.status == "Available").Count();
+            return found;
+        }
     }
 }
