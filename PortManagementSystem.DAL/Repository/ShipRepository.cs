@@ -32,10 +32,15 @@ namespace PortManagementSystem.DAL.Repository
 
         public Ship GetShip(int id)
         {
-            var ship = _context.Ships.Where(i => i.id == id).FirstOrDefault();
+            var ship = _context.Ships.Find(id);
             if (ship != null)
                 return ship;
             return null;
+        }
+
+        public void UpdateShip(Ship ship)
+        {
+            _context.Update(ship);
         }
 
         public void RemoveShip<T>(T ship)

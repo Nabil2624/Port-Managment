@@ -71,12 +71,10 @@ namespace PortManagementSystem.API.Controllers
 
             if (shipdb != null)
             {
-                _services.UpdatingShipProperties(shipdb, ship);
-                if (_services.SavingChanges())
-                    return Ok();
-                throw new Exception("Failed to Update");
+                _services.UpdateShip(ship);
+                return Ok();
             }
-            throw new Exception("Ship Id is incorrect!!");
+            return NotFound();
         }
 
         private Ship MappingShips(ShipToAddDTO ships)

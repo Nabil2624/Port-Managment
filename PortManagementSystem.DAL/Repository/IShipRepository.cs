@@ -16,6 +16,7 @@ namespace PortManagementSystem.DAL.Repository
         public void RemoveShip<T>(T ship);
         public IQueryable<Ship> GetAll();
         public IQueryable<Ship> ViewFullShipDetails();
+        public void UpdateShip(Ship ship);
 
         /*public void AddShip(Ship ship);
         public void UpdateShip(Ship ship);

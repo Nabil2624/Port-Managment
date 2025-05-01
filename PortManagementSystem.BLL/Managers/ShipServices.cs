@@ -120,6 +120,21 @@ namespace PortManagementSystem.BLL.Managers
             var found = _repo.GetAll().Where(a => a.status == "Departed").Count();
             return found;
         }
+
+        public void UpdateShip(ShipToEditDTO ship)
+        {
+            var foundModel = _repo.GetShip(ship.id);
+            if (foundModel != null)
+            {
+                foundModel.width = ship.width;
+                foundModel.length = ship.length;
+                foundModel.name = ship.name;
+                foundModel.cargoType = ship.cargoType;
+                foundModel.EATDate = ship.EATDate;
+                foundModel.EDTDate = ship.EDTDate;
+                foundModel.destination = ship.destination;
+            }
+        }
     }
 }
 

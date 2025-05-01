@@ -19,6 +19,7 @@ namespace PortManagementSystem.BLL.Managers
         public int GetShipsCount();
         public int GetDangerousCargoShipsCount();
         public int GetLeavingCount ();
+        public void UpdateShip (ShipToEditDTO ship);
 
     }
 }
