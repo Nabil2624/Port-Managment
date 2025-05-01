@@ -123,7 +123,7 @@ namespace PortManagementSystem.BLL.Managers
 
         public void UpdateShip(ShipToEditDTO ship)
         {
-            var foundModel = _repo.GetShip(ship.id);
+            var foundModel = _repo.GetShip(5);
             if (foundModel != null)
             {
                 foundModel.width = ship.width;
@@ -133,6 +133,8 @@ namespace PortManagementSystem.BLL.Managers
                 foundModel.EATDate = ship.EATDate;
                 foundModel.EDTDate = ship.EDTDate;
                 foundModel.destination = ship.destination;
+                
+                _repo.UpdateShip(foundModel);
             }
         }
     }
