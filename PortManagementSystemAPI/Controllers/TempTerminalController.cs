@@ -22,8 +22,10 @@ namespace PortManagementSystem.API.Controllers
         
         
         [HttpPut("SevenDayForecast")]
-        public IActionResult SevenDayForecast(DateOnly today)
+        public IActionResult SevenDayForecast(string day)
         {
+            var today = DateOnly.Parse(day);
+            
             _tempTerminalManager.AddTempTerminal();
             _tempShipManager.AddTempShip();
             _tempTerminalManager.AddTempTerminal();
