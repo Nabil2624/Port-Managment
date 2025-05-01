@@ -10,7 +10,6 @@ namespace PortManagementSystem.API.Controllers
 {
     [ApiController]
     [Route("API/[Controller]")]
-    [Authorize]
     public class ShipController : Controller
     {
         IShipServices _services;
@@ -26,6 +25,7 @@ namespace PortManagementSystem.API.Controllers
 
 
         [HttpPost("AddShip")]
+        [Authorize(Roles = "User")]
         public IActionResult AddShip(ShipToAddDTO ships)
         {
             bool check = _services.AddingShips(MappingShips(ships));
@@ -37,6 +37,7 @@ namespace PortManagementSystem.API.Controllers
 
 
         [HttpDelete("RemoveShip/{shipId}")]
+        [Authorize(Roles = "User")]
         public IActionResult RemoveShip(int shipId)
         {
             bool res = _services.RemovingShip(shipId);
@@ -51,6 +52,7 @@ namespace PortManagementSystem.API.Controllers
 
 
         [HttpGet("GetShip/{shipId}")]
+        [Authorize(Roles = "User")]
         public Ship GetShip(int shipId)
         {
             var ship = _services.RetriveShip(shipId);
@@ -62,6 +64,7 @@ namespace PortManagementSystem.API.Controllers
 
         //This Endpoint not required, But Added if needed
         [HttpPut("EditShip")]
+        [Authorize(Roles = "User")]
         public IActionResult EditShip(ShipToEditDTO ship)
         {
             var shipdb = _services.RetriveShip(ship.id);
@@ -85,26 +88,28 @@ namespace PortManagementSystem.API.Controllers
             return shipdb;
         }
 
-
+        [Authorize]
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
            var found = _services.GetShipList();
            return Ok(found);
         }
-
+        [Authorize]
         [HttpGet("ViewShipsCount")]
         public IActionResult GetShipsCount()
         {
             var number = _services.GetShipsCount();
             return Ok(number);
         }
+        [Authorize]
         [HttpGet("ViewDangerousShipsCount")]
         public IActionResult GetDangerousShipsCount()
         {
             var found = _services.GetDangerousCargoShipsCount();
             return Ok(found);
         }
+        [Authorize]
         [HttpGet("ViewLeavingCount")]
         public IActionResult GetLeavingCount()
         {
