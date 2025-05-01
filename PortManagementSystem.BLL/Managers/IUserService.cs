@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PortManagementSystem.BLL.Dto_s;
+using PortManagementSystem.DAL.Models;
 
 namespace PortManagementSystem.BLL.Managers
 {
@@ -15,6 +16,8 @@ namespace PortManagementSystem.BLL.Managers
         void RemoveUser(int id);
         void UserEditHisSelf(UserEditHisSelfDTO dto, int userId);
         void UserRemoveHisSelf(int userId);
+        public IEnumerable<UserReadDto> GetAllUsers();
+        public IEnumerable<UserReadDto> GetAllAdmins();
 
     }
 }

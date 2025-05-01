@@ -111,5 +111,32 @@ namespace PortManagementSystem.BLL.Services
             hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
 
+        public IEnumerable<UserReadDto> GetAllUsers()
+        {
+            var foundModel = _userRepository.GetAll().Where(a=>a.role == "User").ToList();
+
+            var found = foundModel.Select(a => new UserReadDto
+            {
+                Email = a.email,
+                id = a.id,
+                UserName = a.username,
+            });
+
+            return found;
+        }
+
+        public IEnumerable<UserReadDto> GetAllAdmins()
+        {
+            var foundModel = _userRepository.GetAll().Where(a => a.role == "Admin").ToList();
+
+            var found = foundModel.Select(a => new UserReadDto
+            {
+                Email = a.email,
+                id = a.id,
+                UserName = a.username,
+            });
+
+            return found;
+        }
     }
 }
