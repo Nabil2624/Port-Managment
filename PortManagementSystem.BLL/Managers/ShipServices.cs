@@ -123,7 +123,7 @@ namespace PortManagementSystem.BLL.Managers
 
         public void UpdateShip(ShipToEditDTO ship)
         {
-            var foundModel = _repo.GetShip(5);
+            var foundModel = _repo.GetShip(ship.id);
             if (foundModel != null)
             {
                 foundModel.width = ship.width;
