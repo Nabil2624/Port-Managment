@@ -65,7 +65,7 @@ namespace PortManagementSystem.BLL.Managers
             {
                 var currentDate = today.AddDays(day);
 
-                // Handle Arriving Ships
+                // Handle Arriving Ships (only once per EATDate)
                 var arrivingShips = _tempShipRepository.GetAllTempShips()
                     .Where(d => d.EATDate == currentDate && d.status == "Arriving")
                     .ToList();
@@ -88,7 +88,7 @@ namespace PortManagementSystem.BLL.Managers
                     _tempShipRepository.UpdateTempShip(arrival);
                 }
 
-                // Handle Departed Ships
+                // Handle Departed Ships (only on EDTDate)
                 var departuredShips = _tempShipRepository.GetAllTempShips()
                     .Where(d => d.EDTDate == currentDate && d.status == "At Port")
                     .ToList();
@@ -104,17 +104,16 @@ namespace PortManagementSystem.BLL.Managers
 
                     departure.tempTerminalId = null;
                     departure.status = "Departed";
-
                     _tempShipRepository.UpdateTempShip(departure);
                 }
 
-                // Refresh state
+                // Refresh state after arrivals/departures
                 var anchorOutShips = _tempWaitingShipRepository.GetAllTempWaitingShips().ToList();
                 var availableTerminals = _tempTerminalRepository.GetAllTempTerminals()
                     .Where(t => t.status == "Available")
                     .ToList();
 
-                // Assign waiting ships to available terminals
+                // Assign waiting ships to available terminals (if cargo type matches)
                 foreach (var terminal in availableTerminals.ToList())
                 {
                     var matchedShip = anchorOutShips.FirstOrDefault(s => s.cargoType == terminal.classification);
@@ -125,7 +124,6 @@ namespace PortManagementSystem.BLL.Managers
                         tempShip.status = "At Port";
                         tempShip.EDTDate = currentDate.AddDays(matchedShip.Duration);
                         tempShip.tempTerminalId = terminal.id;
-                        tempShip.cargoType = matchedShip.cargoType;
 
                         _tempShipRepository.UpdateTempShip(tempShip);
 
@@ -139,11 +137,12 @@ namespace PortManagementSystem.BLL.Managers
                     }
                 }
 
-                // Snapshot of daily changes
+                // Snapshot of ships active *on the current day*
                 var snapshot = new DailyChangesDto
                 {
                     Date = currentDate.ToString("dddd", CultureInfo.InvariantCulture),
                     Ships = _tempShipRepository.GetAllTempShips()
+                        .Where(s => s.EATDate <= currentDate && s.EDTDate >= currentDate)
                         .Select(s => new ShipForecastReadDto
                         {
                             name = s.name,
@@ -154,7 +153,6 @@ namespace PortManagementSystem.BLL.Managers
 
                 snapshots.Add(snapshot);
             }
-
             return snapshots;
         }
     }
