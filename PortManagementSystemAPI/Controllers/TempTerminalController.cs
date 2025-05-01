@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PortManagementSystem.BLL.Dto_s;
 using PortManagementSystem.BLL.Managers;
 
 namespace PortManagementSystem.API.Controllers
@@ -22,9 +23,9 @@ namespace PortManagementSystem.API.Controllers
         
         
         [HttpPut("SevenDayForecast")]
-        public IActionResult SevenDayForecast(string day)
+        public IActionResult SevenDayForecast([FromBody] ForecastRequestDto day)
         {
-            var today = DateOnly.Parse(day);
+            var today = DateOnly.Parse(day.date);
             
             _tempTerminalManager.AddTempTerminal();
             _tempShipManager.AddTempShip();
