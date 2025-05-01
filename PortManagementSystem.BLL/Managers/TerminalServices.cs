@@ -121,18 +121,46 @@ namespace PortManagementSystem.BLL.Managers
         public IEnumerable<TempTerminalReadDto> GetAll()
         {
             var foundModel = _srepo.GetAll();
+            var terminals = _repo.GetAll();
+            DateOnly date = new DateOnly();
 
             
             var found = foundModel.Select(a => new TempTerminalReadDto
             {
                 classification = a.terminal.classification,
-                status = a.status,
-                id = a.id,
+                status = a.terminal.status,
+                id = a.terminal.id,
                 EATDate = a.EATDate,
                 EDTDate = a.EDTDate,
-                name = a.name
+                name = a.name,
+                terminalId = a.terminalId,
                 
             });
+
+            if (found.Count() < 7 && found != null)
+            {
+                foreach (var terminal in terminals)
+                {
+                    foreach (var ship in foundModel)
+                    {
+                        if (terminal.id != ship.id)
+                        {
+                            var rest = terminals.Select(a => new TempTerminalReadDto
+                            {
+                                status = a.status,
+                                classification = a.classification,
+                                name = "No ships Arrived yet",
+                                id = a.id,
+                                EATDate = date,
+                                EDTDate = date,
+                                terminalId = a.id
+                            });
+                            return rest;
+                        }
+                    }
+                    
+                }
+            }
 
             if (found != null){
                 return found;

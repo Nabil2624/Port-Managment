@@ -14,6 +14,7 @@ namespace PortManagementSystem.BLL.Dto_s
         public string name { get; set; }
         public DateOnly EATDate { get; set; }
         public DateOnly EDTDate { get; set; }
+        public int? terminalId { get; set; }
 
     }
 }
